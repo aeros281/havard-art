@@ -1,1 +1,3 @@
-<p>people-list works!</p>
+<ul>
+  <li *ngFor="let item of (people$ | async) ">{{ item }}</li>
+</ul>
