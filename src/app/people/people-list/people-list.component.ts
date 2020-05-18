@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {PeopleApiService } from '../../core/people-api.service';
-import {Observable} from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+import { Select } from '@ngxs/store';
 
 @Component({
   selector: 'app-people-list',
@@ -10,14 +10,11 @@ import { map } from 'rxjs/operators';
 })
 export class PeopleListComponent implements OnInit {
 
-  public people$: Observable<any>;
+  @Select((state) => state.people.records) people$: Observable<any>;
 
-  constructor(private peopleApiService: PeopleApiService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.people$ = this.peopleApiService.fetchPeopleList().pipe(
-      map((res) => res.records)
-    );
   }
 
 }
