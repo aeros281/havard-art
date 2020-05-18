@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-
-import { Select } from '@ngxs/store';
+import { FetchPeopleAction } from '../action';
+import { PeopleState } from '../state/people-state';
 
 @Component({
   selector: 'app-people-list',
@@ -10,11 +11,13 @@ import { Select } from '@ngxs/store';
 })
 export class PeopleListComponent implements OnInit {
 
-  @Select((state) => state.people.records) people$: Observable<any>;
+  @Select(PeopleState.records) people$: Observable<PeopleRecord[]>;
+  @Select(PeopleState.info) info$: Observable<{ currentPage: number, itemPerPage: number }>;
 
-  constructor() { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
+    this.store.dispatch(new FetchPeopleAction(1, 10));
   }
 
 }
